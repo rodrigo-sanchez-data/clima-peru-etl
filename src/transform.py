@@ -16,8 +16,8 @@ def estandarizar_columnas(df: pd.DataFrame) -> pd.DataFrame:
     logger.info('[TRANSFORM] Nombres de columnas estandarizadas')
     return df
 
-def validar_esquema(df: pd.DataFrame, columnas_necesarias: list[str]) -> pd.DataFrame:
-    faltantes = [col for col in columnas_necesarias if col not in df.columns]
+def validar_esquema(df: pd.DataFrame, campos_criticos: list[str]) -> pd.DataFrame:
+    faltantes = [col for col in campos_criticos if col not in df.columns]
     if faltantes:
         logger.error(f'[TRANSFORM] Faltan columnas requeridas: {faltantes}')
         raise ValueError(f'Faltan columnas requeridas: {faltantes}')
@@ -25,7 +25,7 @@ def validar_esquema(df: pd.DataFrame, columnas_necesarias: list[str]) -> pd.Data
     return df
 
 def convertir_tipos(df: pd.DataFrame) -> pd.DataFrame:
-
+    df = df.rename(columns = {'time': 'datetime'})
     df['datetime'] = pd.to_datetime(df['datetime'], errors='coerce')
     nulos_fecha = df['datetime'].isna().sum()
     if nulos_fecha > 0:
