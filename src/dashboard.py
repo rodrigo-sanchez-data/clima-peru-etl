@@ -11,18 +11,15 @@ st.set_page_config(
     layout='wide'
 )
 
-# ── Carga de datos ──────────────────────────────────────────────
 @st.cache_data
 def cargar_datos() -> pd.DataFrame:
     return pd.read_parquet(PATH_PROCESSED)
 
 df = cargar_datos()
 
-# ── Título ──────────────────────────────────────────────────────
 st.title('🌤️ Dashboard Clima Perú')
 st.markdown('Pipeline ETL con datos de Open-Meteo — Lima, Cusco y Arequipa')
 
-# ── Sidebar — Filtros ───────────────────────────────────────────
 st.sidebar.header('Filtros')
 
 ciudades = st.sidebar.multiselect(
@@ -40,14 +37,12 @@ rango_fechas = st.sidebar.date_input(
     max_value=fecha_max
 )
 
-# ── DataFrame filtrado ──────────────────────────────────────────
 df_filtrado = df[
     (df['ciudad'].isin(ciudades)) &
     (df['fecha'] >= pd.Timestamp(rango_fechas[0])) &
     (df['fecha'] <= pd.Timestamp(rango_fechas[1]))
 ]
 
-# ── Métricas rápidas ────────────────────────────────────────────
 col1, col2, col3 = st.columns(3)
 col1.metric('🌡️ Temperatura promedio', f"{df_filtrado['temperature_2m'].mean():.1f} °C")
 col2.metric('💧 Humedad promedio',      f"{df_filtrado['relativehumidity_2m'].mean():.1f} %")
@@ -55,7 +50,6 @@ col3.metric('📊 Registros',             f"{len(df_filtrado):,}")
 
 st.divider()
 
-# ── Gráfico 1 — Temperatura por hora y ciudad ───────────────────
 st.subheader('Temperatura por hora')
 df_g1 = (
     df_filtrado
@@ -74,7 +68,6 @@ st.plotly_chart(fig1, width='stretch')
 
 st.divider()
 
-# ── Gráfico 2 — Comparación de métricas por ciudad ─────────────
 st.subheader('Comparación de métricas por ciudad')
 df_g2 = (
     df_filtrado
@@ -95,7 +88,6 @@ st.plotly_chart(fig2, width='stretch')
 
 st.divider()
 
-# ── Gráfico 3 — Distribución de precipitación ──────────────────
 st.subheader('Distribución de precipitación por ciudad')
 df_g3 = (
     df_filtrado
