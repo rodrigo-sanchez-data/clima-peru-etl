@@ -14,6 +14,12 @@ CIUDADES = {
     'Arequipa': {'lat': -16.41, 'lon': -71.54},
 }
 
+CAMPOS_CRITICOS = ['datetime', 'temperature_2m', 'precipitation', 'windspeed_10m', 'relativehumidity_2m', 'ciudad']
+COLUMNAS_CLAVE = ['datetime', 'ciudad']
+CIUDADES_ESPERADAS = {'Lima', 'Cusco', 'Arequipa'}
+TEMPERATURA_MIN = -20
+TEMPERATURA_MAX = 50
+
 def get_db_conn() -> str:
     requeridos = ['DB_USER', 'DB_PASSWORD', 'DB_HOST', 'DB_PORT', 'DB_NAME']
     faltantes = [var for var in requeridos if not os.getenv(var)]
