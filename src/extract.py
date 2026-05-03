@@ -24,7 +24,7 @@ def _llamar_api(session: requests.Session, ciudad: str, config: dict) -> dict:
         'latitude':  config['lat'],
         'longitude': config['lon'],
         'hourly':    'temperature_2m,precipitation,windspeed_10m,relativehumidity_2m',
-        'forecast_days': 7,
+        'past_days': 7,
         'timezone':  'America/Lima'
     }
     logger.info(f'[EXTRACT] Consultando clima de: {ciudad}')
