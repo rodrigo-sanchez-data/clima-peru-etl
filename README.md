@@ -35,8 +35,8 @@ API Open-Meteo
 │
 ▼
 [ estandarizar_columnas    ]
-[ validar_esquema          ]
-[ convertir_tipos          ]  ← rename time → datetime
+[ validar_esquema          ]  ← rename time → datetime
+[ convertir_tipos          ]
 [ filtrar_nulos_criticos   ]
 [ filtrar_registros_invalidos ]
 [ remover_duplicados       ]
